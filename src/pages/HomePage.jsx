@@ -83,6 +83,10 @@ export const HomePage = () => {
             <img
               src={slide.image}
               alt={slide.title}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=2000&q=85";
+              }}
               className="w-full h-full object-cover object-center transform scale-100 transition-transform duration-7000 ease-out"
             />
             {/* Gradient Overlay for high-end editorial text legibility */}
@@ -243,6 +247,10 @@ export const HomePage = () => {
                 <img
                   src={cat.bannerImg}
                   alt={cat.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80";
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
@@ -335,6 +343,10 @@ export const HomePage = () => {
                 <img
                   src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"
                   alt="Mobilya Evlilik Paketi"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+                  }}
                   className="w-full h-full object-cover"
                 />
               </div>

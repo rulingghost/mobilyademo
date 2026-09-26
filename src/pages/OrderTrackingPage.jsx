@@ -213,15 +213,33 @@ export const OrderTrackingPage = () => {
               <h4 className="font-bold text-stone-900 uppercase tracking-wider text-[11px]">Siparişteki Mobilyalar</h4>
               <div className="divide-y divide-stone-100">
                 {selectedOrder.items.map((it, i) => (
-                  <div key={i} className="py-2 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <img src={it.image} alt="" className="w-10 h-10 object-cover rounded-lg border border-stone-200" />
-                      <div>
-                        <p className="font-medium text-stone-900">{it.name}</p>
-                        <p className="text-[10px] text-stone-400">{it.quantity} adet</p>
+                  <div key={i} className="py-2.5 flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-2.5 min-w-0">
+                      <img 
+                        src={it.image || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80"} 
+                        alt="" 
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+                        }}
+                        className="w-11 h-11 object-cover rounded-lg border border-stone-200 shrink-0 mt-0.5" 
+                      />
+                      <div className="min-w-0">
+                        <p className="font-bold text-stone-900 truncate">{it.name}</p>
+                        {it.color && <p className="text-[10px] text-amber-800">Renk: {it.color}</p>}
+                        {it.configuredModules && it.configuredModules.length > 0 ? (
+                          <p className="text-[10px] text-stone-500 line-clamp-2 mt-0.5">
+                            Parçalar: {it.configuredModules.map(m => `${m.quantity}× ${m.name}`).join(' + ')}
+                          </p>
+                        ) : it.modules && it.modules.length > 0 ? (
+                          <p className="text-[10px] text-stone-500 line-clamp-1 mt-0.5">
+                            Parçalar: {it.modules.join(', ')}
+                          </p>
+                        ) : null}
+                        <p className="text-[10px] text-stone-400 mt-0.5">{it.quantity} Takım</p>
                       </div>
                     </div>
-                    <span className="font-semibold text-stone-950 font-serif">
+                    <span className="font-semibold text-stone-950 font-serif shrink-0">
                       {(it.price * it.quantity).toLocaleString('tr-TR')} ₺
                     </span>
                   </div>

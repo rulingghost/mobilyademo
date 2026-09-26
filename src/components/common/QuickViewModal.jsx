@@ -48,8 +48,12 @@ export const QuickViewModal = () => {
         <div className="md:w-1/2 bg-stone-100 flex flex-col p-5 justify-between">
           <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white shadow-2xs">
             <img
-              src={product.images[selectedImgIndex] || product.images[0]}
+              src={product.images[selectedImgIndex] || product.images[0] || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80"}
               alt={product.name}
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+              }}
               className="w-full h-full object-cover object-center"
             />
             {product.tag && (
@@ -70,7 +74,15 @@ export const QuickViewModal = () => {
                     selectedImgIndex === idx ? 'border-stone-900 shadow-xs' : 'border-transparent opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
+                  <img 
+                    src={img} 
+                    alt="" 
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+                    }}
+                    className="w-full h-full object-cover" 
+                  />
                 </button>
               ))}
             </div>

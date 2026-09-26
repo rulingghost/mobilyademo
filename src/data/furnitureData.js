@@ -1,5 +1,5 @@
 // VALENZA MOBİLYA - Kapsamlı Mobilya ve Koleksiyon Veri Tabanı
-// İstikbal standartlarında modüler takım yapıları, ölçü tabloları ve fonksiyonellikler
+// İstikbal standartlarında zengin modüler takım yapıları, parça adetleri, adet fiyatları ve ölçü tabloları
 
 export const CATEGORIES = [
   {
@@ -45,7 +45,7 @@ export const CATEGORIES = [
     name: "Yatak & Baza",
     slug: "yatak-baza",
     tagline: "Ortopedik Yaylı Yataklar & Geniş Sandıklı Bazalar",
-    bannerImg: "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1600&q=80",
+    bannerImg: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1600&q=80",
     subcategories: ["Çift Kişilik Yataklar", "Sandıklı Bazalar", "Yatak Başlıkları", "Tek Kişilik Yataklar"]
   },
   {
@@ -94,12 +94,72 @@ export const FURNITURE_PRODUCTS = [
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1200&q=80"
     ],
-    // İstikbal Takım Modülleri (Kullanıcı dilediği parçaları seçip takımı oluşturabilir)
+    // İstikbal Takım Modülleri (Her bir parçanın adet fiyatı, varsayılan takım adedi ve modül fotoğrafı)
     modules: [
-      { id: "mod-m1", name: "3'lü Koltuk (Yataklı & Sandıklı)", price: 21500, width: 232, depth: 98, height: 86, defaultSelected: true },
-      { id: "mod-m2", name: "2'li Koltuk", price: 14500, width: 178, depth: 98, height: 86, defaultSelected: false },
-      { id: "mod-m3", name: "Tekli Koltuk (Berjer)", price: 9500, width: 84, depth: 88, height: 92, defaultSelected: true },
-      { id: "mod-m4", name: "Kombin Puf", price: 4200, width: 65, depth: 65, height: 44, defaultSelected: false }
+      {
+        id: "mod-m1",
+        name: "3'lü Koltuk (Yataklı & Sandıklı)",
+        unitPrice: 21500,
+        price: 21500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 4,
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=500&q=80",
+        width: 232,
+        depth: 98,
+        height: 86,
+        badge: "Ana Parça",
+        desc: "Zero-Wall çift kişilik yatak ve amortisörlü geniş sandık"
+      },
+      {
+        id: "mod-m2",
+        name: "2'li Koltuk",
+        unitPrice: 14500,
+        price: 14500,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 4,
+        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=500&q=80",
+        width: 178,
+        depth: 98,
+        height: 86,
+        badge: "Opsiyonel",
+        desc: "Kompakt salonlar için konforlu ikili oturum alanı"
+      },
+      {
+        id: "mod-m3",
+        name: "Tekli Koltuk (Berjer)",
+        unitPrice: 9500,
+        price: 9500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 6,
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=500&q=80",
+        width: 84,
+        depth: 88,
+        height: 92,
+        badge: "Takıma Dahil",
+        desc: "Yüksek ergonomik sırt destekli tekli berjer (Adet Fiyatı)"
+      },
+      {
+        id: "mod-m4",
+        name: "Kombin Puf",
+        unitPrice: 4200,
+        price: 4200,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 4,
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=500&q=80",
+        width: 65,
+        depth: 65,
+        height: 44,
+        badge: "Tamamlayıcı",
+        desc: "Döşemeli ayak uzatma veya ekstra sehpa pufu"
+      }
     ],
     features: [
       "Zero-Wall Yatak Mekanizması: Koltuğu öne çekmeden açılır",
@@ -132,7 +192,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: true,
     isFeatured: true,
     tag: "Çok Satan",
-    shortDescription: "Doğal mermer desenli senkron açılır masa, 6 adet konfor sandalye ve LED aydınlatmalı konsol takımı.",
+    shortDescription: "Doğal mermer desenli senkron açılır masa, konfor sandalyeler ve LED aydınlatmalı konsol takımı.",
     description: "Monza Yemek Odası, modern mimarinin dingin çizgilerini mermer dokusu ve sıcak ahşap tonlarıyla bir araya getiriyor. Senkronize mekanizmalı açılır masa mekanizması tek bir dokunuşla 6 kişilik masayı 8-10 kişilik geniş bir ziyafet alanına dönüştürür. Konsol içi gizli kaşıklık ve soft-close frenli raylar kullanım kolaylığı sağlar.",
     colors: [
       { name: "Ceviz & Calacatta Mermer", hex: "#4A3B32", code: "CW-01" },
@@ -145,10 +205,70 @@ export const FURNITURE_PRODUCTS = [
       "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-y1", name: "Senkron Açılır Yemek Masası", price: 23500, width: 175, depth: 95, height: 78, defaultSelected: true },
-      { id: "mod-y2", name: "Ergonomik Kavisli Sandalye (4 Adet)", price: 14000, width: 54, depth: 58, height: 86, defaultSelected: true },
-      { id: "mod-y3", name: "Konsol ve Aynası", price: 18500, width: 210, depth: 48, height: 82, defaultSelected: true },
-      { id: "mod-y4", name: "Ekstra Sandalye (2'li Takım)", price: 7200, width: 54, depth: 58, height: 86, defaultSelected: false }
+      {
+        id: "mod-y1",
+        name: "Senkron Açılır Yemek Masası",
+        unitPrice: 23500,
+        price: 23500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=500&q=80",
+        width: 175,
+        depth: 95,
+        height: 78,
+        badge: "Ana Parça",
+        desc: "175 cm'den 220 cm'ye uzayan senkronize çelik raylı açılır tabla"
+      },
+      {
+        id: "mod-y2",
+        name: "Ergonomik Kavisli Sandalye",
+        unitPrice: 3500,
+        price: 3500,
+        defaultQty: 4,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 12,
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=500&q=80",
+        width: 54,
+        depth: 58,
+        height: 86,
+        badge: "Takıma Dahil (Adet)",
+        desc: "Leke tutmaz buklet kumaş, torna masif kayın ayak (Adet Fiyatı)"
+      },
+      {
+        id: "mod-y3",
+        name: "Konsol ve Aynası",
+        unitPrice: 18500,
+        price: 18500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?auto=format&fit=crop&w=500&q=80",
+        width: 210,
+        depth: 48,
+        height: 82,
+        badge: "Takıma Dahil",
+        desc: "Gizli kaşıklık bölmesi ve yavaş kapanan frenli kapaklar"
+      },
+      {
+        id: "mod-y4",
+        name: "LED Aydınlatmalı Cam Vitrin Dolabı",
+        unitPrice: 9800,
+        price: 9800,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1604578762246-41134e37f9cc?auto=format&fit=crop&w=500&q=80",
+        width: 90,
+        depth: 45,
+        height: 172,
+        badge: "Opsiyonel",
+        desc: "Dokunmatik açılan füme temperli cam kapaklı vitrin dolap"
+      }
     ],
     features: [
       "Senkronize Kolay Açılır Mekanizma: 175 cm'den 220 cm'ye uzar",
@@ -180,7 +300,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: false,
     isFeatured: true,
     tag: "Klasik & Modern",
-    shortDescription: "Polyester dolgulu kavisli yatak başlığı, geniş akordiyon gardırop, şifonyer ve komodin seti.",
+    shortDescription: "Kavisli keten yatak başlığı, geniş akordiyon gardırop, şifonyer ve komodin seti.",
     description: "Venedik Yatak Odası Takımı, yatak odanızı huzur dolu bir dinlenme mabedine çevirir. Nefes alabilen keten kumaş kaplı yatak başlığı akşamları kitap okurken veya dinlenirken mükemmel sırt desteği sunar. 6 kapaklı gardırop içindeki pantolonluk, ışıklı askı borusu ve çekmece modülleri ile gardırop düzenini kusursuz kılar.",
     colors: [
       { name: "Doğal Açık Meşe & Keten", hex: "#D8C7B5", code: "OM-01" },
@@ -189,14 +309,74 @@ export const FURNITURE_PRODUCTS = [
     ],
     images: [
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-k1", name: "160x200 Karyola & Döşemeli Başlık", price: 19500, width: 185, depth: 215, height: 122, defaultSelected: true },
-      { id: "mod-k2", name: "6 Kapaklı Aynalı Gardırop", price: 29000, width: 250, depth: 62, height: 218, defaultSelected: true },
-      { id: "mod-k3", name: "Şifonyer & LED Aydınlatmalı Ayna", price: 12500, width: 120, depth: 48, height: 86, defaultSelected: true },
-      { id: "mod-k4", name: "Komodin (2 Adet)", price: 7900, width: 58, depth: 45, height: 52, defaultSelected: true }
+      {
+        id: "mod-k1",
+        name: "160x200 Karyola & Döşemeli Başlık",
+        unitPrice: 19500,
+        price: 19500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=500&q=80",
+        width: 185,
+        depth: 215,
+        height: 122,
+        badge: "Ana Parça",
+        desc: "Keten dokuma başlık ve ses yapmayan latalı ızgara karkas"
+      },
+      {
+        id: "mod-k2",
+        name: "6 Kapaklı Aynalı Gardırop",
+        unitPrice: 29000,
+        price: 29000,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=500&q=80",
+        width: 250,
+        depth: 62,
+        height: 218,
+        badge: "Takıma Dahil",
+        desc: "Sensörlü LED askılık, dahili çekmeceler ve pantolonluk rayı"
+      },
+      {
+        id: "mod-k3",
+        name: "Şifonyer & LED Aydınlatmalı Ayna",
+        unitPrice: 12500,
+        price: 12500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=500&q=80",
+        width: 120,
+        depth: 48,
+        height: 86,
+        badge: "Takıma Dahil",
+        desc: "3 geniş frenli çekmece ve buğulanmaz dokunmatik LED ayna"
+      },
+      {
+        id: "mod-k4",
+        name: "Komodin",
+        unitPrice: 3950,
+        price: 3950,
+        defaultQty: 2,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 4,
+        image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80",
+        width: 58,
+        depth: 45,
+        height: 52,
+        badge: "Takıma Dahil (Adet)",
+        desc: "Başucu için frenli raylı şık komodin (Adet Fiyatı)"
+      }
     ],
     features: [
       "Gardırop İçi Sensörlü LED Askılık Aydınlatması",
@@ -227,7 +407,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: true,
     isFeatured: true,
     tag: "Geniş Sandıklı",
-    shortDescription: "Sağ/Sol yöne çevrilebilen modüler yapı, kolay açılır yatak mekanizması ve kumaş kaplı puf.",
+    shortDescription: "Sağ/Sol yöne çevrilebilen modüler yapı, kolay açılır yatak mekanizması ve puf seçeneği.",
     description: "Pera Köşe Takımı, kompakt salonlardan geniş oturma odalarına kadar her alana uyum sağlayan yön değiştirebilir köşe yapısına sahiptir. Koltuk altındaki amortisörlü geniş sandık alanı evinizdeki tüm fazla eşyaları saklarken, tek hareketle açılan yatak mekanizması misafirleriniz için konforlu bir uyku alanı yaratır.",
     colors: [
       { name: "Kum Beji Buklet", hex: "#E3DAC9", code: "KB-01" },
@@ -240,9 +420,54 @@ export const FURNITURE_PRODUCTS = [
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-p1", name: "Pera L-Köşe Koltuk (Yataklı & Sandıklı)", price: 29500, width: 285, depth: 195, height: 85, defaultSelected: true },
-      { id: "mod-p2", name: "Pera Uyumlu Berjer", price: 7900, width: 82, depth: 85, height: 90, defaultSelected: false },
-      { id: "mod-p3", name: "Sandıklı Uzanma Pufu", price: 4500, width: 75, depth: 75, height: 44, defaultSelected: false }
+      {
+        id: "mod-p1",
+        name: "Pera L-Köşe Koltuk (Yataklı & Sandıklı)",
+        unitPrice: 29500,
+        price: 29500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=500&q=80",
+        width: 285,
+        depth: 195,
+        height: 85,
+        badge: "Ana Parça",
+        desc: "Yön değiştirebilir modüler L-köşe, çift kişilik geniş yatak ve sandık"
+      },
+      {
+        id: "mod-p2",
+        name: "Pera Uyumlu Berjer",
+        unitPrice: 7900,
+        price: 7900,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 4,
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=500&q=80",
+        width: 82,
+        depth: 85,
+        height: 90,
+        badge: "Opsiyonel",
+        desc: "Köşe kumaşı ile tam takım şık berjer (Adet Fiyatı)"
+      },
+      {
+        id: "mod-p3",
+        name: "Sandıklı Uzanma Pufu",
+        unitPrice: 4500,
+        price: 4500,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 3,
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=500&q=80",
+        width: 75,
+        depth: 75,
+        height: 44,
+        badge: "Opsiyonel",
+        desc: "Amortisörlü saklama sandığına sahip puf"
+      }
     ],
     features: [
       "Yönü Değiştirilebilir (Sağ/Sol Köşe Uyumlu)",
@@ -272,7 +497,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: false,
     isFeatured: true,
     tag: "Omurga Dostu",
-    shortDescription: "5 Bölgeli paket yay sistemi, lateks katmanlı ortopedik yatak ve çelik amortisörlü sandıklı baza.",
+    shortDescription: "5 Bölgeli paket yay sistemi, ortopedik yatak ve çelik amortisörlü sandıklı baza.",
     description: "Alora Yatak Seti, omurganın doğal eğrisini koruyan 5 bölgeli bağımsız Pocket Yay teknolojisine sahiptir. Eşlerin birbirlerinin gece dönüş hareketlerinden etkilenmesini önler. Altındaki çift emniyet kilitli sandıklı baza ise kışlık yorganlar ve eşyalarınız için devasa bir saklama alanı sağlar.",
     colors: [
       { name: "Keten Taş Beji", hex: "#D1C7BD", code: "TB-01" },
@@ -280,14 +505,59 @@ export const FURNITURE_PRODUCTS = [
       { name: "Koyu Antrasit", hex: "#343A40", code: "AN-03" }
     ],
     images: [
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-a1", name: "160x200 Alora 5-Zone Yatak", price: 13500, width: 160, depth: 200, height: 32, defaultSelected: true },
-      { id: "mod-a2", name: "160x200 Çift Sandıklı Çelik Baza", price: 11500, width: 160, depth: 200, height: 38, defaultSelected: true },
-      { id: "mod-a3", name: "Döşemeli Alora Yatak Başlığı", price: 5500, width: 175, depth: 10, height: 125, defaultSelected: true }
+      {
+        id: "mod-a1",
+        name: "160x200 Alora 5-Zone Pocket Yatak",
+        unitPrice: 13500,
+        price: 13500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=500&q=80",
+        width: 160,
+        depth: 200,
+        height: 32,
+        badge: "Ana Parça",
+        desc: "5 bölgeli omurga destekli bağımsız paket yay sistemi"
+      },
+      {
+        id: "mod-a2",
+        name: "160x200 Çift Sandıklı Çelik Baza",
+        unitPrice: 11500,
+        price: 11500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=500&q=80",
+        width: 160,
+        depth: 200,
+        height: 38,
+        badge: "Takıma Dahil",
+        desc: "Emniyet mandallı çift kademeli amortisörlü çelik baza"
+      },
+      {
+        id: "mod-a3",
+        name: "Döşemeli Alora Yatak Başlığı",
+        unitPrice: 5500,
+        price: 5500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=500&q=80",
+        width: 175,
+        depth: 10,
+        height: 125,
+        badge: "Takıma Dahil",
+        desc: "Leke tutmaz şık dikiş detaylı yatak başlığı"
+      }
     ],
     features: [
       "5 Bölgeli Bağımsız Pocket Yay (Eşlerin hareketlerini iletmez)",
@@ -317,7 +587,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: true,
     isFeatured: false,
     tag: "Trend Tasarım",
-    shortDescription: "Oluklu ahşap ön paneller, füme cam vitrin, gizli kablo kanalı ve duvara asılan üst modül.",
+    shortDescription: "Oluklu ahşap paneller, füme cam vitrin, gizli kablo kanalı ve duvara asılan üst modül.",
     description: "Verona TV Ünitesi, teknolojik cihazların kablo karmaşasını şık bir estetikle gizler. Uzaktan kumanda sinyallerini geçiren özel füme cam kapağı ve oluklu ahşap el işçiliği detaylarıyla salonunuza zengin bir mimari hava katar. 85 inçe kadar tüm televizyon modellerine uygundur.",
     colors: [
       { name: "Ceviz & Füme Cam", hex: "#4B3621", code: "CF-01" },
@@ -328,8 +598,54 @@ export const FURNITURE_PRODUCTS = [
       "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-v1", name: "TV Alt Sehpası (220 cm)", price: 16500, width: 220, depth: 46, height: 55, defaultSelected: true },
-      { id: "mod-v2", name: "Duvar Askılı Üst Raf & Dolap Modülü", price: 8500, width: 140, depth: 25, height: 35, defaultSelected: true }
+      {
+        id: "mod-v1",
+        name: "TV Alt Sehpası (220 cm)",
+        unitPrice: 16500,
+        price: 16500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=500&q=80",
+        width: 220,
+        depth: 46,
+        height: 55,
+        badge: "Ana Parça",
+        desc: "Füme cam kapaklı, kablo gizleme hazneli alt konsol"
+      },
+      {
+        id: "mod-v2",
+        name: "Duvar Askılı Üst Raf & Dolap",
+        unitPrice: 8500,
+        price: 8500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=500&q=80",
+        width: 140,
+        depth: 25,
+        height: 35,
+        badge: "Takıma Dahil",
+        desc: "Duvara gizli ankraj ile monte edilen kapaklı üst dolap"
+      },
+      {
+        id: "mod-v3",
+        name: "Yan Kitaplık & Vitrin Modülü",
+        unitPrice: 6500,
+        price: 6500,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?auto=format&fit=crop&w=500&q=80",
+        width: 50,
+        depth: 35,
+        height: 150,
+        badge: "Opsiyonel",
+        desc: "Dikey yerleşimli cam raflı dekoratif kitaplık"
+      }
     ],
     features: [
       "Füme Cam Sayesinde Kumanda Sinyallerini Geçirir",
@@ -358,7 +674,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: false,
     isFeatured: false,
     tag: "Masif Ahşap",
-    shortDescription: "Amerikan masif ceviz tabla, elektrostatik siyah çelik ayaklar ve entegre deri sümen bölmesi.",
+    shortDescription: "Amerikan masif ceviz tabla, elektrostatik siyah çelik ayaklar ve entegre sümen.",
     description: "Ponte Çalışma Masası, ev-ofis ortamınıza verimlilik ve lüks bir atmosfer katar. Geniş tablası dizüstü ve harici monitörler için ideal çalışma derinliği sağlarken, gizli kablo haznesi masa üzerindeki tüm priz ve adaptörleri saklar.",
     colors: [
       { name: "Doğal Amerikan Ceviz", hex: "#5C4033", code: "CV-01" },
@@ -369,8 +685,54 @@ export const FURNITURE_PRODUCTS = [
       "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-pt1", name: "Ponte Çalışma Masası (160 cm)", price: 16500, width: 160, depth: 80, height: 76, defaultSelected: true },
-      { id: "mod-pt2", name: "Eşleşen 4 Raflı Metal Kitaplık", price: 8500, width: 85, depth: 35, height: 180, defaultSelected: false }
+      {
+        id: "mod-pt1",
+        name: "Ponte Çalışma Masası (160 cm)",
+        unitPrice: 16500,
+        price: 16500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=500&q=80",
+        width: 160,
+        depth: 80,
+        height: 76,
+        badge: "Ana Parça",
+        desc: "Doğal ceviz masif tabla ve gizli manyetik kablo kanalı"
+      },
+      {
+        id: "mod-pt2",
+        name: "4 Raflı Metal İskeletli Kitaplık",
+        unitPrice: 8500,
+        price: 8500,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 3,
+        image: "https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=500&q=80",
+        width: 85,
+        depth: 35,
+        height: 180,
+        badge: "Opsiyonel",
+        desc: "Elektrostatik siyah fırın boyalı çelik dikmeler ve masif raflar"
+      },
+      {
+        id: "mod-pt3",
+        name: "Tekerlekli Çekmeceli Keson",
+        unitPrice: 4200,
+        price: 4200,
+        defaultQty: 0,
+        defaultSelected: false,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=500&q=80",
+        width: 42,
+        depth: 48,
+        height: 58,
+        badge: "Opsiyonel",
+        desc: "Masa altına yanaşan kilitli 3 çekmeceli mobil keson"
+      }
     ],
     features: [
       "Entegre Manyetik Kablo ve Şarj Cihazı Saklama Yuvası",
@@ -387,7 +749,7 @@ export const FURNITURE_PRODUCTS = [
   {
     id: "val-08",
     sku: "VLZ-TMM-808",
-    name: "Siena Traverten Taş Sehpa Takımı (Orta & Zigon)",
+    name: "Siena Traverten Taş Sehpa Takımı",
     category: "tamamlayici",
     categoryName: "Sehpa & Tamamlayıcı",
     collection: "Siena Natural Stone",
@@ -398,7 +760,7 @@ export const FURNITURE_PRODUCTS = [
     isNew: true,
     isFeatured: true,
     tag: "Doğal Taş",
-    shortDescription: "Doğal Denizli traverten taşından üretilen yuvarlak orta sehpa ve iç içe geçebilen ikili yan sehpa.",
+    shortDescription: "Doğal Denizli traverten taşından üretilen yuvarlak orta sehpa ve yan sehpa seti.",
     description: "Doğal traverten taşının eşsiz damar yapısını modern mimariyle buluşturan Siena Sehpa Seti, salonunuzun merkezine zarif bir sanat eseri kazandırır. Mat honlu yüzeyi kadifemsi bir dokunuş hissi verir.",
     colors: [
       { name: "Doğal Krem Traverten", hex: "#E6DFD5", code: "TR-01" },
@@ -409,8 +771,38 @@ export const FURNITURE_PRODUCTS = [
       "https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=1200&q=80"
     ],
     modules: [
-      { id: "mod-sn1", name: "Yuvarlak Büyük Orta Sehpa (Çap: 90 cm)", price: 11500, width: 90, depth: 90, height: 42, defaultSelected: true },
-      { id: "mod-sn2", name: "İkili Geçmeli Yan Zigon Sehpa", price: 7900, width: 45, depth: 45, height: 50, defaultSelected: true }
+      {
+        id: "mod-sn1",
+        name: "Yuvarlak Büyük Orta Sehpa (Çap: 90 cm)",
+        unitPrice: 11500,
+        price: 11500,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=500&q=80",
+        width: 90,
+        depth: 90,
+        height: 42,
+        badge: "Ana Parça",
+        desc: "Masif doğal traverten blok gövde, honlu mat koruma cilası"
+      },
+      {
+        id: "mod-sn2",
+        name: "İkili Geçmeli Yan Zigon Sehpa",
+        unitPrice: 7900,
+        price: 7900,
+        defaultQty: 1,
+        defaultSelected: true,
+        minQty: 0,
+        maxQty: 2,
+        image: "https://images.unsplash.com/photo-1577140917170-285929fb55b7?auto=format&fit=crop&w=500&q=80",
+        width: 45,
+        depth: 45,
+        height: 50,
+        badge: "Takıma Dahil",
+        desc: "Koltuk kenarına yanaşan pratik iç içe geçen yan sehpa"
+      }
     ],
     features: [
       "%100 Doğal Masif Traverten Taş Blok",

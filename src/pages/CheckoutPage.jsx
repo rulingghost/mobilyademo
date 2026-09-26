@@ -96,6 +96,8 @@ export const CheckoutPage = () => {
         name: item.product.name,
         color: item.selectedColor,
         modules: item.selectedModuleNames,
+        configuredModules: item.configuredModules || [],
+        totalPieces: item.totalPiecesCount || item.quantity,
         price: item.calculatedPrice,
         quantity: item.quantity,
         image: item.product.images[0]
@@ -577,14 +579,27 @@ export const CheckoutPage = () => {
 
           <div className="divide-y divide-stone-100 max-h-72 overflow-y-auto pr-1">
             {cartItems.map((item) => (
-              <div key={item.cartItemId || item.id} className="py-2.5 flex items-center justify-between gap-3 text-xs">
-                <img src={item.product.images[0]} alt="" className="w-12 h-12 object-cover rounded-xl border shrink-0" />
+              <div key={item.cartItemId || item.id} className="py-2.5 flex items-start justify-between gap-3 text-xs">
+                <img 
+                  src={item.product.images[0] || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80"} 
+                  alt="" 
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+                  }}
+                  className="w-12 h-12 object-cover rounded-xl border shrink-0 mt-0.5" 
+                />
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-stone-900 truncate">{item.product.name}</p>
                   {item.selectedColor && <p className="text-[10px] text-amber-800">Renk: {item.selectedColor}</p>}
-                  <p className="text-[10px] text-stone-500">{item.quantity} adet × {item.calculatedPrice.toLocaleString('tr-TR')} ₺</p>
+                  {item.configuredModules && item.configuredModules.length > 0 && (
+                    <p className="text-[9px] text-stone-500 line-clamp-1 mt-0.5">
+                      {item.configuredModules.map(m => `${m.quantity}× ${m.name}`).join(', ')}
+                    </p>
+                  )}
+                  <p className="text-[10px] text-stone-500 mt-0.5">{item.quantity} Takım × {item.calculatedPrice.toLocaleString('tr-TR')} ₺</p>
                 </div>
-                <span className="font-bold text-stone-950 font-serif">
+                <span className="font-bold text-stone-950 font-serif shrink-0">
                   {(item.calculatedPrice * item.quantity).toLocaleString('tr-TR')} ₺
                 </span>
               </div>

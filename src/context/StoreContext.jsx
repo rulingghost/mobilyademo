@@ -5,11 +5,17 @@ import { INITIAL_ORDERS, INITIAL_MESSAGES } from '../data/mockData';
 const StoreContext = createContext();
 
 export const StoreProvider = ({ children }) => {
-  // Products state (persisted or defaults)
+  // Products state (persisted custom products merged with updated FURNITURE_PRODUCTS)
   const [products, setProducts] = useState(() => {
     try {
       const saved = localStorage.getItem('valenza_products');
-      return saved ? JSON.parse(saved) : FURNITURE_PRODUCTS;
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Retain custom admin products, but ensure catalog products have latest modules and verified images
+        const customAdded = parsed.filter(p => !FURNITURE_PRODUCTS.some(fp => fp.id === p.id));
+        return [...FURNITURE_PRODUCTS, ...customAdded];
+      }
+      return FURNITURE_PRODUCTS;
     } catch {
       return FURNITURE_PRODUCTS;
     }
@@ -173,34 +179,98 @@ export const StoreProvider = ({ children }) => {
     }
   };
 
-  // Cart operations (Module & set aware)
-  const addToCart = (product, quantity = 1, selectedModules = null, customPrice = null, selectedColor = null) => {
+  // Cart operations (Module & piece quantity aware - İstikbal Style)
+  const addToCart = (product, quantity = 1, moduleConfig = null, customPrice = null, selectedColor = null) => {
     if (!product) return;
 
     const chosenColor = selectedColor || (product.colors && product.colors[0]?.name) || "Standart";
-    const chosenModules = selectedModules || (product.modules ? product.modules.filter(m => m.defaultSelected).map(m => m.id) : []);
     
-    // Calculate final unit price based on selected modules or product price
-    let effectiveUnitPrice = product.discountPrice || product.basePrice || product.price;
-    if (product.modules && chosenModules.length > 0) {
-      const modulesTotal = product.modules
-        .filter(m => chosenModules.includes(m.id))
-        .reduce((sum, m) => sum + m.price, 0);
-      if (modulesTotal > 0) {
-        effectiveUnitPrice = modulesTotal;
+    // Build configured modules with individual quantities and unit prices
+    let configuredModules = [];
+    let moduleQtyMap = {};
+    let modulesTotal = 0;
+
+    if (product.modules && product.modules.length > 0) {
+      if (moduleConfig && typeof moduleConfig === 'object' && !Array.isArray(moduleConfig)) {
+        // Modern object format: { [moduleId]: qty }
+        moduleQtyMap = { ...moduleConfig };
+        product.modules.forEach(m => {
+          const qty = moduleQtyMap[m.id] !== undefined ? moduleQtyMap[m.id] : (m.defaultQty || (m.defaultSelected ? 1 : 0));
+          if (qty > 0) {
+            const unitPrice = m.unitPrice || m.price;
+            const lineTotal = unitPrice * qty;
+            configuredModules.push({
+              id: m.id,
+              name: m.name,
+              unitPrice,
+              quantity: qty,
+              lineTotal,
+              image: m.image || product.images[0],
+              width: m.width,
+              depth: m.depth,
+              height: m.height
+            });
+            modulesTotal += lineTotal;
+          }
+        });
+      } else if (Array.isArray(moduleConfig)) {
+        // Legacy array of IDs format
+        product.modules.forEach(m => {
+          if (moduleConfig.includes(m.id)) {
+            const qty = 1;
+            moduleQtyMap[m.id] = 1;
+            const unitPrice = m.unitPrice || m.price;
+            const lineTotal = unitPrice * qty;
+            configuredModules.push({
+              id: m.id,
+              name: m.name,
+              unitPrice,
+              quantity: qty,
+              lineTotal,
+              image: m.image || product.images[0],
+              width: m.width,
+              depth: m.depth,
+              height: m.height
+            });
+            modulesTotal += lineTotal;
+          }
+        });
+      } else {
+        // Default standard set quantities
+        product.modules.forEach(m => {
+          const qty = m.defaultQty !== undefined ? m.defaultQty : (m.defaultSelected ? 1 : 0);
+          if (qty > 0) {
+            moduleQtyMap[m.id] = qty;
+            const unitPrice = m.unitPrice || m.price;
+            const lineTotal = unitPrice * qty;
+            configuredModules.push({
+              id: m.id,
+              name: m.name,
+              unitPrice,
+              quantity: qty,
+              lineTotal,
+              image: m.image || product.images[0],
+              width: m.width,
+              depth: m.depth,
+              height: m.height
+            });
+            modulesTotal += lineTotal;
+          }
+        });
       }
     }
-    if (customPrice) {
-      effectiveUnitPrice = customPrice;
-    }
 
-    const cartItemId = `${product.id}-${chosenColor}-${chosenModules.sort().join('_')}`;
+    const effectiveUnitPrice = customPrice || (modulesTotal > 0 ? modulesTotal : (product.discountPrice || product.basePrice || product.price));
+    
+    // Hash key for unique combination
+    const modConfigKey = Object.entries(moduleQtyMap).sort().map(([k, v]) => `${k}:${v}`).join('_');
+    const cartItemId = `${product.id}-${chosenColor}-${modConfigKey || 'standard'}`;
 
     setCart(prev => {
-      const existing = prev.find(item => item.cartItemId === cartItemId || (item.id === product.id && item.selectedColor === chosenColor));
-      if (existing) {
-        return prev.map(item =>
-          item === existing
+      const existingIndex = prev.findIndex(item => item.cartItemId === cartItemId);
+      if (existingIndex >= 0) {
+        return prev.map((item, idx) =>
+          idx === existingIndex
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
@@ -212,7 +282,8 @@ export const StoreProvider = ({ children }) => {
           id: product.id,
           quantity,
           selectedColor: chosenColor,
-          selectedModules: chosenModules,
+          moduleQuantities: moduleQtyMap,
+          configuredModules,
           unitPrice: effectiveUnitPrice
         }
       ];
@@ -392,25 +463,77 @@ export const StoreProvider = ({ children }) => {
     setMessages(prev => prev.map(m => m.id === messageId ? { ...m, read: true } : m));
   };
 
-  // Enriched Cart Items with product metadata & price calculations
+  // Enriched Cart Items with product metadata & price calculations (İstikbal Style Modular Breakdown)
   const cartItems = cart.map(item => {
     const product = products.find(p => p.id === item.id);
     if (!product) return null;
 
-    let itemPrice = item.unitPrice || product.discountPrice || product.basePrice || product.price;
-    let selectedModuleNames = [];
-
-    if (product.modules && item.selectedModules && item.selectedModules.length > 0) {
-      const activeMods = product.modules.filter(m => item.selectedModules.includes(m.id));
-      if (activeMods.length > 0) {
-        selectedModuleNames = activeMods.map(m => m.name);
+    let configuredModules = item.configuredModules || [];
+    
+    // If not stored directly (e.g. legacy cart item or initial mock), reconstruct it from product.modules
+    if (configuredModules.length === 0 && product.modules) {
+      if (item.moduleQuantities && typeof item.moduleQuantities === 'object') {
+        product.modules.forEach(m => {
+          const qty = item.moduleQuantities[m.id] || 0;
+          if (qty > 0) {
+            configuredModules.push({
+              id: m.id,
+              name: m.name,
+              unitPrice: m.unitPrice || m.price,
+              quantity: qty,
+              lineTotal: (m.unitPrice || m.price) * qty,
+              image: m.image || product.images[0]
+            });
+          }
+        });
+      } else if (item.selectedModules && Array.isArray(item.selectedModules)) {
+        product.modules.forEach(m => {
+          if (item.selectedModules.includes(m.id)) {
+            configuredModules.push({
+              id: m.id,
+              name: m.name,
+              unitPrice: m.unitPrice || m.price,
+              quantity: 1,
+              lineTotal: m.unitPrice || m.price,
+              image: m.image || product.images[0]
+            });
+          }
+        });
+      } else {
+        product.modules.forEach(m => {
+          const qty = m.defaultQty !== undefined ? m.defaultQty : (m.defaultSelected ? 1 : 0);
+          if (qty > 0) {
+            configuredModules.push({
+              id: m.id,
+              name: m.name,
+              unitPrice: m.unitPrice || m.price,
+              quantity: qty,
+              lineTotal: (m.unitPrice || m.price) * qty,
+              image: m.image || product.images[0]
+            });
+          }
+        });
       }
     }
+
+    let calculatedPrice = item.unitPrice;
+    if (!calculatedPrice) {
+      if (configuredModules.length > 0) {
+        calculatedPrice = configuredModules.reduce((sum, m) => sum + m.lineTotal, 0);
+      } else {
+        calculatedPrice = product.discountPrice || product.basePrice || product.price;
+      }
+    }
+
+    const selectedModuleNames = configuredModules.map(m => `${m.quantity}× ${m.name}`);
+    const totalPiecesCount = configuredModules.reduce((sum, m) => sum + m.quantity, 0);
 
     return {
       ...item,
       product,
-      calculatedPrice: itemPrice,
+      configuredModules,
+      totalPiecesCount,
+      calculatedPrice,
       selectedModuleNames
     };
   }).filter(Boolean);

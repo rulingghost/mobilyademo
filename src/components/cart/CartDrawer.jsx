@@ -119,8 +119,12 @@ export const CartDrawer = () => {
                     className="p-3.5 bg-white rounded-2xl border border-stone-200 shadow-2xs flex gap-3 items-start"
                   >
                     <img 
-                      src={product.images[0]} 
+                      src={product.images[0] || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80"} 
                       alt={product.name} 
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+                      }}
                       className="w-20 h-20 object-cover rounded-xl border border-stone-100 shrink-0 cursor-pointer"
                       onClick={() => {
                         setIsCartOpen(false);
@@ -155,12 +159,28 @@ export const CartDrawer = () => {
                         </p>
                       )}
 
-                      {/* Selected modules summary */}
-                      {selectedModuleNames && selectedModuleNames.length > 0 && (
+                      {/* İstikbal Style: Modül & Parça Adet Dökümü */}
+                      {item.configuredModules && item.configuredModules.length > 0 ? (
+                        <div className="mt-2 p-2 bg-stone-50 rounded-xl border border-stone-200/60 space-y-1">
+                          <span className="text-[9px] font-bold text-stone-600 uppercase tracking-wider block">
+                            Takım İçeriği ({item.configuredModules.reduce((s, m) => s + m.quantity, 0)} Parça):
+                          </span>
+                          {item.configuredModules.map((mod, idx) => (
+                            <div key={idx} className="flex items-center justify-between text-[10px] text-stone-700">
+                              <span className="truncate pr-1">
+                                <strong className="text-amber-900 font-bold">{mod.quantity}×</strong> {mod.name}
+                              </span>
+                              <span className="font-mono text-stone-900 font-semibold shrink-0">
+                                {(mod.lineTotal || (mod.unitPrice * mod.quantity)).toLocaleString('tr-TR')} ₺
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : selectedModuleNames && selectedModuleNames.length > 0 ? (
                         <p className="text-[10px] text-stone-500 line-clamp-1 mt-0.5">
                           Parçalar: {selectedModuleNames.join(' + ')}
                         </p>
-                      )}
+                      ) : null}
 
                       <div className="flex items-center justify-between mt-3">
                         <div className="flex items-center border border-stone-200 rounded-lg bg-stone-50">

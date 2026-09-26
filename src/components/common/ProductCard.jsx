@@ -15,6 +15,9 @@ export const ProductCard = ({ product }) => {
   const isFavorited = isInWishlist(product.id);
   const activePrice = product.discountPrice || product.basePrice || product.price;
   const installment9 = Math.round(activePrice / 9);
+  const piecesCount = product.modules 
+    ? product.modules.filter(m => (m.defaultQty !== undefined ? m.defaultQty > 0 : m.defaultSelected)).reduce((sum, m) => sum + (m.defaultQty || 1), 0)
+    : null;
 
   return (
     <div className="group relative bg-white rounded-2xl p-3 border border-stone-200/90 shadow-sm hover:shadow-xl hover:border-stone-300 transition-all duration-300 flex flex-col justify-between">
@@ -25,8 +28,12 @@ export const ProductCard = ({ product }) => {
         className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-stone-100 cursor-pointer"
       >
         <img
-          src={product.images[0]}
+          src={product.images[0] || "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80"}
           alt={product.name}
+          onError={(e) => {
+            e.currentTarget.onerror = null;
+            e.currentTarget.src = "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80";
+          }}
           className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
           loading="lazy"
         />
@@ -38,8 +45,13 @@ export const ProductCard = ({ product }) => {
               {product.tag}
             </span>
           )}
+          {piecesCount && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-700 text-white shadow-xs">
+              {piecesCount} Parça Takım
+            </span>
+          )}
           {product.discountPrice && (
-            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-600 text-white shadow-xs">
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-stone-900 text-white shadow-xs">
               Özel Fiyat
             </span>
           )}

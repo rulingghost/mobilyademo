@@ -95,7 +95,7 @@ export const INITIAL_PRODUCTS = [
     },
     images: [
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&w=1200&q=80"
     ],
     featured: true,
@@ -132,8 +132,8 @@ export const INITIAL_PRODUCTS = [
     },
     images: [
       "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1580481077195-c22e4d081f9b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80"
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1200&q=80"
     ],
     featured: false,
     isNew: true,
@@ -240,8 +240,8 @@ export const INITIAL_PRODUCTS = [
       weight: 16
     },
     images: [
-      "https://images.unsplash.com/photo-1580481077195-c22e4d081f9b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1582533561751-ef6f6ab93a2e?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1200&q=80"
     ],
     featured: false,
@@ -349,7 +349,7 @@ export const INITIAL_PRODUCTS = [
     },
     images: [
       "https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540518614846-7ede433c4ef0?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=80",
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80"
     ],
     featured: false,
@@ -483,7 +483,7 @@ export const INITIAL_ORDERS = [
         name: "Siena Kavisli Buklet Sandalye (2'li Takım)",
         price: 14200,
         quantity: 3,
-        image: "https://images.unsplash.com/photo-1580481077195-c22e4d081f9b?auto=format&fit=crop&w=300&q=80"
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=300&q=80"
       }
     ],
     subtotal: 92100,
